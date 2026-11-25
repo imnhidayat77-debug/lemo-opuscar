@@ -23,6 +23,8 @@
 
 ## 🆕 New
 
+- **Fork (imnhidayat22)** · The principles of animation from *The Illusion of Life* ([`ANIMATION.md`](ANIMATION.md), `core/anim.js`, the `animation-principles` skill) and four new styles with style frames: Pencil Test, Golden-Age Storybook, Xerox Line '60s, Story-Sketch Board. Install this fork: `claude plugin marketplace add imnhidayat22/lemo-opuscar && claude plugin install lemo-opuscar@lemolab`.
+
 - **2026-11-12** · **33 new styles**: <!--n-->99<!--/n--> now, in 15 categories sorted by what the picture looks like, and the gallery in [English](https://lemomo-ai.github.io/lemo-opuscar/) and [Chinese](https://lemomo-ai.github.io/lemo-opuscar/zh/), with a page for every style. Some demo films remade, bugs fixed, style prompts improved. [See the styles ↓](#the-styles)
 - **2026-10-22** · Make a style your own: change a style or start blank, and keep it. [See how ↓](#make-a-style-your-own)
 
