@@ -1,0 +1,19 @@
+{
+ "slug": "story-sketch",
+ "num": "",
+ "en": "Story-Sketch Board",
+ "cn": "故事草图板",
+ "category_en": "Sketch & Board",
+ "category_cn": "速写板书",
+ "film": "The Keeper's Storm (style frame)",
+ "film_cn": "守塔人的风暴夜（风格帧）",
+ "line": "A row of charcoal-and-pastel story sketches pinned to a board tells a lighthouse keeper's storm night.",
+ "line_cn": "一排钉在板上的炭笔粉彩草图，讲守塔人的风暴之夜。",
+ "uses": [
+  "Pitches & proposals",
+  "Origin stories",
+  "Customer stories"
+ ],
+ "frame_sec": 0.0,
+ "dur": 0
+}

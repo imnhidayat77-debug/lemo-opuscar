@@ -1,0 +1,19 @@
+{
+ "slug": "storybook-feature",
+ "num": "",
+ "en": "Golden-Age Storybook",
+ "cn": "黄金时代童话长片",
+ "category_en": "Cartoons",
+ "category_cn": "卡通动画",
+ "film": "The Lantern Path (style frame)",
+ "film_cn": "提灯小路（风格帧）",
+ "line": "A small mole carries a lantern along a painted forest path at dusk, five glass levels deep, fireflies rising.",
+ "line_cn": "黄昏的彩绘森林小路上，小鼹鼠提着灯走过，五层玻璃景深，萤火虫升起。",
+ "uses": [
+  "Fairy tales & bedtime stories",
+  "Brand stories",
+  "Holidays & greetings"
+ ],
+ "frame_sec": 0.0,
+ "dur": 0
+}

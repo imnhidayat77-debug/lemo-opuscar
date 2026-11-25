@@ -1,0 +1,19 @@
+{
+ "slug": "pencil-test",
+ "num": "",
+ "en": "Pencil Test",
+ "cn": "铅笔原画测试",
+ "category_en": "Cartoons",
+ "category_cn": "卡通动画",
+ "film": "Sparrow Hop (style frame)",
+ "film_cn": "麻雀一跳（风格帧）",
+ "line": "An animator's rough pencil drawing of a sparrow mid-hop, construction lines, onion skin and timing chart on punched paper.",
+ "line_cn": "动画师在打孔纸上画的麻雀起跳原画：蓝色结构线、洋葱皮和时间表。",
+ "uses": [
+  "Character acting",
+  "Making-of & training",
+  "Brand mascots"
+ ],
+ "frame_sec": 0.0,
+ "dur": 0
+}

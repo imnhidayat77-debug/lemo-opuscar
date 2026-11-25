@@ -9,6 +9,7 @@ This repository is a library of film styles. Each style has a `styles/<slug>/STY
 | "Which styles are there?" / no style chosen | **Finding the style** below |
 | Directing: story, sound, rhythm, camera, maps, checks, delivery | [`DIRECTOR.md`](DIRECTOR.md) |
 | Building: install, pages, voice, music, mix | [`TECHNIQUE.md`](TECHNIQUE.md) |
+| Animating characters and anything that acts: the principles of animation, faces, dialogue, walks, timing | [`ANIMATION.md`](ANIMATION.md) |
 | Tool commands and flags | [`core/README.md`](core/README.md) |
 | The user wants to change a style and keep it as their own, or make their own style from a blank page, or names a style in `~/lemo-my-styles/` | [`MY-STYLES.md`](MY-STYLES.md) |
 | Adding a style to the library (owner only) | [`MAINTAINING.md`](MAINTAINING.md) |
@@ -68,6 +69,13 @@ All 99 styles · 全部风格:
 ✦ draws with an image generator: the user's Codex CLI, or another image tool they have. Without one the film cannot start (core/README.md, "Image generation"). Say so when you suggest the style.
 <!-- style-list:end -->
 
+Also in this library, added from *The Illusion of Life* (style frame only, no demo film yet; list them with the rest, under their category):
+
+- **卡通动画 Cartoons**: 铅笔原画测试 Pencil Test, 黄金时代童话长片 Golden-Age Storybook, 60s 静电复印线条 Xerox Line '60s
+- **速写板书 Sketch & Board**: 故事草图板 Story-Sketch Board
+
+For these, say that the style has no demo film yet when you suggest it, and read [`ANIMATION.md`](ANIMATION.md) as well as the `STYLE.md`: their whole look depends on the acting.
+
 ## Workflow
 
 1. **Brief.** Make sure the style and the topic are clear, then ask the user once, in a single message (DIRECTOR.md §1):
@@ -82,7 +90,7 @@ All 99 styles · 全部风格:
 
    Skip what their request already answers. Wait for the reply, fill every other gap with a sensible default, sum up the brief in a few lines and start. Don't come back with more questions.
 2. **Treatment.** Write `TREATMENT.md` in the project folder (DIRECTOR.md §4), before you open the demo (an Edit & Documentary style gathers its material first: **Treatment first** above).
-3. **Look.** Render style frames or a model sheet with the real drawing code and check them against `STYLE.md` (DIRECTOR.md §5).
+3. **Look.** Render style frames or a model sheet with the real drawing code and check them against `STYLE.md` (DIRECTOR.md §5). With characters, read [`ANIMATION.md`](ANIMATION.md) first and write the character note (§6 there).
 4. **Storyboard, only if the user asked for it** (DIRECTOR.md §5). **Stop and wait for approval.** Otherwise don't stop.
 5. **Produce.** Voice → check → score (can run in parallel) → animation → mix → render (TECHNIQUE.md).
 6. **Self-check and deliver** (DIRECTOR.md §11).

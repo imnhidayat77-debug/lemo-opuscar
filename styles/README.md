@@ -179,3 +179,16 @@ Users may name a style in English, in Chinese, by a name it had before (Formerly
 | Blob Simulation | 小人模拟实验 | [`pip-simulation`](pip-simulation/STYLE.md) | *Is Faster Better?* |  |
 
 ✦ draws with an image generator: the user's Codex CLI, or another image tool they have. Without one the film cannot start (core/README.md, "Image generation"). Say so when you suggest the style.
+
+## Added from *The Illusion of Life* · 动画原理新增 (style frame only, no demo film yet)
+
+<!-- added by hand, outside styleboard/build.py; if build.py rewrites this file, add these rows back -->
+
+| Style | 风格 | Folder | Our style frame | Category |
+|---|---|---|---|---|
+| Pencil Test | 铅笔原画测试 | [`pencil-test`](pencil-test/STYLE.md) | *Sparrow Hop* | Cartoons · 卡通动画 |
+| Golden-Age Storybook | 黄金时代童话长片 | [`storybook-feature`](storybook-feature/STYLE.md) | *The Lantern Path* | Cartoons · 卡通动画 |
+| Xerox Line '60s | 60s 静电复印线条 | [`xerox-line`](xerox-line/STYLE.md) | *Morning Walk* | Cartoons · 卡通动画 |
+| Story-Sketch Board | 故事草图板 | [`story-sketch`](story-sketch/STYLE.md) | *The Keeper's Storm* | Sketch & Board · 速写板书 |
+
+These styles have a `STYLE.md`, a style frame and its source, but no demo film: when one is used, follow its `STYLE.md` and [`ANIMATION.md`](../ANIMATION.md); `DEMO.md` explains the frame.

@@ -1,0 +1,8 @@
+Xerox Line '60s: style frame, "Morning Walk"
+
+Code: written for this library (MIT, see LICENSE), using core/lib.js and core/anim.js.
+Fonts (not kept in git):
+- Love Ya Like A Sister (SIL Open Font License 1.1), google/fonts `ofl/loveyalikeasister/`, pinned to commit 83c62e30d87daa70216dab6b984d00d20d96d585; fetched by `tools/fonts.sh`.
+- Patrick Hand (SIL Open Font License 1.1), google/fonts `ofl/patrickhand/`, pinned to commit 83c62e30d87daa70216dab6b984d00d20d96d585; fetched by `tools/fonts.sh`.
+- Oswald (SIL Open Font License 1.1), google/fonts `ofl/oswald/`, pinned to commit 83c62e30d87daa70216dab6b984d00d20d96d585; fetched by `tools/fonts.sh`.
+No other third-party assets: every picture is drawn in code.

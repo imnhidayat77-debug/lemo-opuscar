@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Golden-Age Storybook — style frame</title>
+<style>
+@font-face { font-family: 'Cormorant Garamond'; src: url(fonts/CormorantGaramond.ttf); font-weight: 300 700; font-display: block; }
+html,body{margin:0;background:#000;overflow:hidden}canvas{display:block}
+</style></head>
+<body><canvas id="c"></canvas>
+<script type="module">
+import { render, DUR } from './frame.js';
+const cv = document.getElementById('c'), W = innerWidth, H = innerHeight; cv.width = W; cv.height = H;
+const ctx = cv.getContext('2d');
+window.DUR = DUR;
+window.render = t => render(ctx, W, H, t);
+await document.fonts.load('600 48px "Cormorant Garamond"');
+render(ctx, W, H, 0);      // paints and caches the levels once
+window.READY = true;
+</script></body></html>

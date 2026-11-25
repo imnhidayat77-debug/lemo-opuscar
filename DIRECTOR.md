@@ -94,6 +94,9 @@ Render 6–9 key shots with the real drawing code, tiled into one sheet (`core/r
 
 ## 9. Performance
 
+The full method (the twelve principles, faces, dialogue, walks, acting, timing) is in [`ANIMATION.md`](ANIMATION.md), with helpers in `core/anim.js`. The essentials:
+
+
 - **Anticipation, action, follow-through** on every meaningful move. Characters change emotion. They do not just slide across the screen.
 - **Motion continuity**, especially for characters built from code rigs:
   - Blend every pose with keyframes and easing; never switch poses inside an `if`. The only exception is a deliberate one-frame comic pop.
@@ -101,6 +104,8 @@ Render 6–9 key shots with the real drawing code, tiled into one sheet (`core/r
   - Held props sit **between the palms**, at a depth between the two arms. A hand-over interpolates from one palm to the other. A rolling object turns by distance ÷ radius.
   - Step through key actions at 0.2 s intervals, enlarged.
 - Check every expression at final size, especially eyebrow direction: "worried" and "angry" are one flip apart.
+- **Show the character thinking**: at least one visible change of mind per shot, changed outside the big moves (ANIMATION.md §1, §3).
+- **Dialogue is phrased, not word-by-word**; body accents lead the sound by 3–4 frames, impacts by 2–3 (ANIMATION.md §4).
 
 ## 10. The failures we saw most
 
@@ -120,6 +125,7 @@ Render 6–9 key shots with the real drawing code, tiled into one sheet (`core/r
 - Loudness about −14 LUFS; no black frames, no NaN frames; subtitles in sync and not covering key action.
 - Every row of the sound design table is actually in the mix.
 - Every map, globe or satellite view passes section 13, checked enlarged.
+- With characters or acting objects: the animation check in ANIMATION.md §11.
 - No LemoLab sign-off: `grep -rniE "lemo ?lab|opus 5\.5" <project folder>` finds nothing outside `LICENSE`, `CREDITS` and the library's path in `LIB=` lines, and you have watched the last seconds of the film (text drawn into an image can't be grepped).
 
 **Deliver**, in the project folder (the complete list):

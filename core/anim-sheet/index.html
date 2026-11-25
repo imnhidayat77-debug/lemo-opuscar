@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Principles of animation: reference sheet</title>
+<style>html,body{margin:0;background:#f3efe6;overflow:hidden}canvas{display:block}</style></head>
+<body><canvas id="c"></canvas>
+<script type="module">
+// Reference sheet for core/anim.js and ANIMATION.md. render(t): every panel shows its strobe (the drawings over time) and
+// a live red copy at time t, so a video of this page shows the helpers moving.
+//   node core/render/still.mjs core/anim-sheet 0 1.2 --out /tmp/sheet
+import { clamp, lerp, TAU } from '/core/lib.js';
+import * as A from '/core/anim.js';
+const W = innerWidth, H = innerHeight, cv = document.getElementById('c'), x = cv.getContext('2d');
+cv.width = W; cv.height = H;
+const INK = '#2b2622', SOFT = 'rgba(43,38,34,.28)', RED = '#c8402e', BLUE = '#3a6ea5', PAPER = '#f3efe6';
+const COLS = 4, ROWS = 2, PAD = 26, TOP = 74;
+const pw = (W - PAD * (COLS + 1)) / COLS, ph = (H - TOP - PAD * (ROWS + 1)) / ROWS;
+window.DUR = 4;
+
+function panel(i, title, note, draw) {
+  const c = i % COLS, r = Math.floor(i / COLS), px = PAD + c * (pw + PAD), py = TOP + PAD + r * (ph + PAD);
+  x.save(); x.translate(px, py);
+  x.fillStyle = '#fbf8f2'; x.strokeStyle = SOFT; x.lineWidth = 1.5; x.fillRect(0, 0, pw, ph); x.strokeRect(0, 0, pw, ph);
+  x.fillStyle = INK; x.font = '600 22px Georgia, serif'; x.fillText(title, 16, 32);
+  x.fillStyle = '#6b625a'; x.font = '15px Georgia, serif'; wrap(note, 16, ph - 44, pw - 32, 19);
+  x.beginPath(); x.rect(0, 44, pw, ph - 100); x.clip();
+  draw(pw, ph); x.restore();
+}
+function wrap(s, x0, y0, w, lh) { const words = s.split(' '); let line = '', y = y0; for (const wd of words) { const t = line ? line + ' ' + wd : wd; if (x.measureText(t).width > w) { x.fillText(line, x0, y); line = wd; y += lh; } else line = t; } x.fillText(line, x0, y); }
+const dot = (px, py, r = 3, col = INK) => { x.fillStyle = col; x.beginPath(); x.arc(px, py, r, 0, TAU); x.fill(); };
+
+window.render = t => {
+  x.fillStyle = PAPER; x.fillRect(0, 0, W, H);
+  x.fillStyle = INK; x.font = '600 34px Georgia, serif'; x.fillText('The principles of animation · core/anim.js', PAD, 52);
+  x.font = '17px Georgia, serif'; x.fillStyle = '#6b625a'; x.fillText('grey = the drawings over time (strobe) · red = time ' + t.toFixed(2) + ' s · see ANIMATION.md', W - PAD - 560, 50);
+
+  // 1 · Bouncing ball: spacing, squash on contact, stretch when fast
+  panel(0, '1 · Bounce: timing & squash', 'Drawings bunch at the top, spread near the floor; flat on contact, long when fast. bounce(), squash(), stretchAlong().', (w, h) => {
+    const g = 3200, base = h - 120, sc = 0.9;
+    const draw = (tt, col, a) => {
+      const b = A.bounce(tt, { h0: 250, keep: 0.55, g, vx: 150, x0: 30 });
+      const px = 40 + b.x * sc, py = base - b.y * sc, r = 20;
+      x.save(); x.globalAlpha = a; x.translate(px, py - r);
+      if (b.contact > 0.05) { const s = 1 - 0.45 * b.contact; x.translate(0, r * (1 - s)); x.scale(1 / s, s); }
+      else { const st = A.stretchAlong(0, -b.vy, 0.00035, 0.4); A.stretchCtx(x, st.angle, st.s); }
+      x.strokeStyle = col; x.lineWidth = 2.5; x.beginPath(); x.arc(0, 0, r, 0, TAU); x.stroke(); x.restore();
+    };
+    for (let f = 0; f < 60; f += 2) draw(f / 24, INK, 0.25);
+    draw(t % 2.6, RED, 1);
+    x.strokeStyle = SOFT; x.beginPath(); x.moveTo(10, base); x.lineTo(w - 10, base); x.stroke();
+  });
+
+  // 2 · Flour sack: same volume in every attitude
+  panel(1, '2 · Squash & stretch: the flour sack', 'Whatever the pose, the area stays the same. Squash at the landing, stretch in the leap. Never hold a stretch.', (w, h) => {
+    const sack = (cx, cy, s, lean, col, lw = 2.5) => {
+      const q = A.squash(s), ww = 34 * q.sx, hh = 92 * q.sy;   // half-width, height: area kept
+      x.save(); x.translate(cx, cy); x.rotate(lean); x.strokeStyle = col; x.lineWidth = lw; x.lineJoin = 'round'; x.beginPath();
+      x.moveTo(-ww, 0);
+      x.bezierCurveTo(-ww * 1.25, -hh * 0.45, -ww * 0.9, -hh * 0.85, -ww * 0.62, -hh);          // left side up
+      x.lineTo(-ww * 0.8, -hh * 1.12); x.lineTo(-ww * 0.42, -hh * 1.02);                       // left corner tuft
+      x.quadraticCurveTo(0, -hh * 0.94, ww * 0.42, -hh * 1.02);                                // gathered top
+      x.lineTo(ww * 0.8, -hh * 1.12); x.lineTo(ww * 0.62, -hh);                                // right corner tuft
+      x.bezierCurveTo(ww * 0.9, -hh * 0.85, ww * 1.25, -hh * 0.45, ww, 0);                     // right side down
+      x.quadraticCurveTo(0, hh * 0.08, -ww, 0); x.stroke();
+      x.restore();
+    };
+    const poses = [[0.62, 0], [0.82, 0], [1, 0], [1.32, -0.12], [1.15, 0.2]];
+    poses.forEach(([s, l], i) => sack(70 + i * (w - 140) / 4, h - 125, s, l, INK));
+    const u = (t % 2) / 2, s = lerp(0.62, 1.32, 0.5 - 0.5 * Math.cos(TAU * u));
+    sack(w / 2, h - 290, s, 0, RED, 3);
+    x.fillStyle = '#6b625a'; x.font = '14px Georgia, serif'; x.fillText('squashed', 26, h - 104); x.fillText('stretched', w - 190, h - 104);
+  });
+
+  // 3 · Anticipation → action → follow-through
+  panel(2, '3 · Anticipation, action, settle', 'action(t, t0): a wind-up the other way, a short hold, a fast move past the target, a settle.', (w, h) => {
+    const gx = 30, gy = 80, gw = w - 60, gh = h - 220, T = A.actionDur({}) + 0.15;
+    const Y = v => gy + gh * (1 - (v + 0.3) / 1.6);
+    x.strokeStyle = SOFT; x.lineWidth = 1; [0, 1].forEach(v => { x.beginPath(); x.moveTo(gx, Y(v)); x.lineTo(gx + gw, Y(v)); x.stroke(); });
+    x.strokeStyle = INK; x.lineWidth = 2.5; x.beginPath();
+    for (let i = 0; i <= 200; i++) { const tt = i / 200 * T, v = A.action(tt, 0.05); i ? x.lineTo(gx + gw * tt / T, Y(v)) : x.moveTo(gx, Y(v)); }
+    x.stroke();
+    for (let f = 0; f * 2 / 24 < T; f++) { const tt = f * 2 / 24; dot(gx + gw * tt / T, Y(A.action(tt, 0.05)), 3.2); }
+    const tt = t % (T + 0.4); dot(gx + gw * Math.min(tt, T) / T, Y(A.action(Math.min(tt, T), 0.05)), 7, RED);
+    x.fillStyle = '#6b625a'; x.font = '14px Georgia, serif'; x.fillText('start', gx + 2, Y(0) - 8); x.fillText('target', gx + 2, Y(1) - 8);
+    x.fillText('wind-up', gx + gw * 0.12, Y(-0.18) + 22); x.fillText('overshoot', gx + gw * 0.45, Y(1.1) - 10);
+  });
+
+  // 4 · Slow in / slow out
+  panel(3, '4 · Slow in & slow out', 'chart(n): where n inbetweens fall. Even spacing is mechanical; favour the pose that must be read.', (w, h) => {
+    const rows = [['even', 0, 0], ['favour both', 0.6, 0.6], ['slow in only', 0, 0.8], ['slow out only', 0.8, 0]];
+    rows.forEach(([name, fa, fb], i) => {
+      const y = 92 + i * ((h - 200) / 4), x0 = 40, x1 = w - 40;
+      x.strokeStyle = SOFT; x.lineWidth = 1.5; x.beginPath(); x.moveTo(x0, y); x.lineTo(x1, y); x.stroke();
+      A.chart(7, fa, fb).forEach((u, k, arr) => { x.strokeStyle = INK; x.lineWidth = k === 0 || k === arr.length - 1 ? 3 : 1.6; const px = lerp(x0, x1, u); x.beginPath(); x.moveTo(px, y - (k === 0 || k === arr.length - 1 ? 14 : 8)); x.lineTo(px, y + 8); x.stroke(); });
+      dot(lerp(x0, x1, A.slow((t % 1.5) / 1.5, fa, fb)), y, 6, RED);
+      x.fillStyle = '#6b625a'; x.font = '14px Georgia, serif'; x.fillText(name, x0, y - 18);
+    });
+  });
+
+  // 5 · Arcs: straight inbetweens kill a head turn
+  panel(4, '5 · Arcs', 'The same two keys: inbetweened straight (blue) and on an arc (ink). Living things move on curves. arc(), through().', (w, h) => {
+    const a = [70, h - 190], b = [w - 70, h - 190];
+    for (let i = 0; i <= 8; i++) {
+      const u = A.slow(i / 8, 0.5);
+      dot(lerp(a[0], b[0], u), lerp(a[1], b[1], u) + 40, 4, BLUE);
+      const p = A.arc(a, b, u, -0.32); x.strokeStyle = INK; x.lineWidth = 2; x.beginPath(); x.arc(p[0], p[1], 15, 0, TAU); x.stroke();
+    }
+    const u = A.slow((t % 1.6) / 1.6, 0.5), p = A.arc(a, b, u, -0.32); dot(p[0], p[1], 8, RED);
+    x.fillStyle = BLUE; x.font = '14px Georgia, serif'; x.fillText('straight inbetweens: dead', a[0], a[1] + 72);
+  });
+
+  // 6 · Overlap: a tail chain follows the body
+  panel(5, '6 · Follow-through & overlap', 'chain(): each joint follows the one before, later and looser. The body stops; the tail keeps going and settles.', (w, h) => {
+    const T = 2.4, X0 = 80, X1 = w - 110, by = h - 230;
+    const bodyX = s => { const u = ((s % T) + T) % T; return lerp(X0, X1, A.action(u, 0.15, { antic: 0.2, move: 0.3, settle: 0.45, back: 0.08, over: 0.04 })); };
+    const drawTail = (tt, col, lw, a) => {
+      const bx = bodyX(tt), js = A.chain(bodyX, tt, 7, { delay: 0.035, freq: 2.2, damp: 0.32 });
+      x.save(); x.globalAlpha = a; x.strokeStyle = col; x.lineWidth = lw; x.lineCap = 'round';
+      x.beginPath(); x.arc(bx, by, 28, 0, TAU); x.stroke();
+      let px = bx - 28, py = by + 4; x.beginPath(); x.moveTo(px, py);
+      js.forEach((jx, i) => {                                  // each joint bends by how far it lags the body
+        const ang = Math.PI + Math.max(-1.25, Math.min(1.25, (bx - jx) * 0.006)) * (0.4 + 0.6 * (i + 1) / 7) + 0.12;
+        px += Math.cos(ang) * 18; py -= Math.sin(ang) * 18; x.lineTo(px, py);
+      });
+      x.stroke(); x.restore();
+    };
+    [0.15, 0.45, 0.6, 0.75, 1.0, 1.3].forEach(tt => drawTail(tt, INK, 2, 0.25));
+    drawTail(t % T, RED, 3, 1);
+  });
+
+  // 7 · Blink chart
+  panel(6, '7 · The blink', 'blink(): shut fast, one frame closed, open slower. Blink on every change of eye direction, and inside holds.', (w, h) => {
+    const n = 8, cw = (w - 40) / n;
+    for (let f = 0; f < n; f++) {
+      const c = A.blink(f / 24 + 1e-4, [0]), cx = 20 + cw * (f + 0.5), cy = h - 230, r = Math.min(30, cw * 0.38);
+      x.strokeStyle = INK; x.lineWidth = 2; x.beginPath(); x.ellipse(cx, cy, r, r * 1.15, 0, 0, TAU); x.stroke();
+      x.save(); x.beginPath(); x.ellipse(cx, cy, r, r * 1.15, 0, 0, TAU); x.clip();
+      dot(cx + r * 0.15, cy + r * 0.1, r * 0.42, INK);
+      x.fillStyle = '#d9cbb8'; x.fillRect(cx - r - 2, cy - r * 1.2, 2 * r + 4, 2.3 * r * 1.15 * c);
+      x.restore();
+      x.fillStyle = '#6b625a'; x.font = '13px Georgia, serif'; x.fillText('f' + f, cx - 7, cy + r * 1.15 + 20);
+    }
+    const c = A.blink(t % 1, [0.3]), cx = w / 2, cy = 120, r = 34;
+    x.strokeStyle = RED; x.lineWidth = 3; x.beginPath(); x.ellipse(cx, cy, r, r * 1.15, 0, 0, TAU); x.stroke();
+    x.save(); x.beginPath(); x.ellipse(cx, cy, r, r * 1.15, 0, 0, TAU); x.clip(); dot(cx + 5, cy + 3, 14, INK);
+    x.fillStyle = '#e9b7ad'; x.fillRect(cx - r - 2, cy - r * 1.2, 2 * r + 4, 2.3 * r * 1.15 * c); x.restore();
+  });
+
+  // 8 · Walk: feet locked, body arcs
+  panel(7, '8 · Walk: contact, down, passing, up', 'walk(): planted feet never slide; the body is lowest just after contact and highest after passing.', (w, h) => {
+    const base = h - 150, o = { period: 0.5, stride: 46, bob: 7, lift: 16, x0: 20 };
+    const fig = (tt, col, a, lw) => {
+      const g = A.walk(tt, o), hip = [g.x, base - 70 - g.lift];
+      x.save(); x.globalAlpha = a; x.strokeStyle = col; x.lineWidth = lw; x.lineCap = 'round';
+      [[g.footL, 1], [g.footR, 0.55]].forEach(([f, k]) => { const ft = [f.x, base - f.y], kn = [(hip[0] + ft[0]) / 2 + 9, (hip[1] + ft[1]) / 2 - 3]; x.beginPath(); x.moveTo(...hip); x.lineTo(...kn); x.lineTo(...ft); x.lineTo(ft[0] + 12, ft[1]); x.stroke(); });
+      const sh = [hip[0] + 4, hip[1] - 52]; x.beginPath(); x.moveTo(...hip); x.lineTo(...sh); x.stroke();
+      [g.armL, g.armR].forEach(s => { x.beginPath(); x.moveTo(...sh); x.lineTo(sh[0] + 22 * s, sh[1] + 40); x.stroke(); });
+      x.beginPath(); x.arc(sh[0] + 3, sh[1] - 17, 14, 0, TAU); x.stroke(); x.restore();
+    };
+    for (let f = 0; f < 24; f += 3) fig(f / 24, INK, 0.2, 2);
+    fig(t % 1.5, RED, 1, 3);
+    x.strokeStyle = SOFT; x.beginPath(); x.moveTo(10, base); x.lineTo(w - 10, base); x.stroke();
+  });
+};
+window.READY = true;
+</script></body></html>

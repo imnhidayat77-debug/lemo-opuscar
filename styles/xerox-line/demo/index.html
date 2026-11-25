@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Xerox Line '60s — style frame</title>
+<style>
+@font-face { font-family: 'Love Ya Like A Sister'; src: url(fonts/LoveYaLikeASister.ttf); font-display: block; }
+@font-face { font-family: 'Patrick Hand'; src: url(fonts/PatrickHand-Regular.ttf); font-display: block; }
+@font-face { font-family: 'Oswald'; src: url(fonts/Oswald.ttf); font-weight: 200 700; font-display: block; }
+html,body{margin:0;background:#000;overflow:hidden}canvas{display:block}
+</style></head>
+<body><canvas id="c"></canvas>
+<script type="module">
+import { render, DUR } from './frame.js';
+const cv = document.getElementById('c'), W = innerWidth, H = innerHeight; cv.width = W; cv.height = H;
+const ctx = cv.getContext('2d');
+window.DUR = DUR;
+window.render = t => render(ctx, W, H, t);
+await Promise.all([document.fonts.load('34px "Love Ya Like A Sister"'), document.fonts.load('44px "Patrick Hand"')]);
+window.READY = true;
+</script></body></html>

@@ -1,0 +1,7 @@
+Story-Sketch Board: style frame, "The Keeper's Storm"
+
+Code: written for this library (MIT, see LICENSE), using core/lib.js and core/anim.js.
+Fonts (not kept in git):
+- Kalam (SIL Open Font License 1.1), google/fonts `ofl/kalam/`, pinned to commit 83c62e30d87daa70216dab6b984d00d20d96d585; fetched by `tools/fonts.sh`.
+- Courier Prime (SIL Open Font License 1.1), google/fonts `ofl/courierprime/`, pinned to commit 83c62e30d87daa70216dab6b984d00d20d96d585; fetched by `tools/fonts.sh`.
+No other third-party assets: every picture is drawn in code.

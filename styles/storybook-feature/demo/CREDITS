@@ -1,0 +1,6 @@
+Golden-Age Storybook: style frame, "The Lantern Path"
+
+Code: written for this library (MIT, see LICENSE), using core/lib.js and core/anim.js.
+Fonts (not kept in git):
+- Cormorant Garamond (SIL Open Font License 1.1), google/fonts `ofl/cormorantgaramond/`, pinned to commit 83c62e30d87daa70216dab6b984d00d20d96d585; fetched by `tools/fonts.sh`.
+No other third-party assets: every picture is drawn in code.

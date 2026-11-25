@@ -92,7 +92,7 @@ export const SECS = [{ id: 'chase', t: 12.0, bpm: 144, beats: 12 }, ...];
 export const HIT  = { pratfall: ['chase', 6], ... };   // section + beat
 ```
 
-A small script (`cuecheck.py`, in `styles/<slug>/demo/tools/` of several demos) compares every visual hit with the music cue it should land on. Aim for 0 ms.
+A small script (`cuecheck.py`, in `styles/<slug>/demo/tools/` of several demos) compares every visual hit with the music cue it should land on. Aim for 0 ms against the time you meant: an impact's extreme drawing usually reads in sync 2–3 frames *before* the sound, and a body accent 3–4 frames before the word (ANIMATION.md §4); write that lead into the expected times rather than letting the check pull the picture late.
 
 ## 4. Voice
 
@@ -138,6 +138,9 @@ Write an original score from the cue map, in the instruments of the style's soun
 
 ## 10. Characters drawn in code
 
+How to act with a rig (anticipation, overlap, arcs, timing, blinks, walks, lip sync) is in [`ANIMATION.md`](ANIMATION.md); `core/anim.js` has the helpers (`action`, `poses`, `follow`, `chain`, `arc`, `blink`, `walk`, `squash`, `lead`), all stateless so any frame renders alone.
+
+
 - A 2.5D rig (torso, head, limbs solved per frame) is enough for pantomime.
 - Order the shoulder rotation as abduction, then flexion; the reverse order crosses raised arms into an X.
 - Let the shoulder girdle rise and move forward as the arm lifts, and don't outline the part of the arm that overlaps the torso: that line is what makes a joint look like a puppet seam.
@@ -154,7 +157,8 @@ Fonts: Google Fonts (OFL), self-hosted in the project. The typefaces a `STYLE.md
 
 | If you need… | Look at |
 |---|---|
-| 2D character animation and lip sync | `styles/scifi-toon/`, `styles/cel-anime-80s/` |
+| 2D character animation and lip sync | `styles/scifi-toon/`, `styles/cel-anime-80s/`; the principles in `ANIMATION.md` and `core/anim.js` |
+| a pencil-test, story-sketch, Xerox-line or painted storybook look | `styles/pencil-test/`, `styles/story-sketch/`, `styles/xerox-line/`, `styles/storybook-feature/` (style frames only, no demo film yet) |
 | a timeline-driven score with cue checking | `styles/microgame/`, `styles/silent-film/` |
 | an image-to-ink redraw and film-damage post pass | `styles/silent-film/demo/engine/` |
 | a brush or stroke engine | `styles/watercolor/`, `styles/ink-wash/`, `styles/impasto/` |

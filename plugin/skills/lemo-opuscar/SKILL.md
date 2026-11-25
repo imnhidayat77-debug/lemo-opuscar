@@ -21,4 +21,6 @@ What changes in skill mode:
 | Library files in scripts and `build.sh` | `$LIB/…`, with `LIB=<path>` at the top of `build.sh`; never `../..` |
 | Demo source | not downloaded. `sh "<skill base directory>/scripts/setup.sh" demo <slug>`, only after your `TREATMENT.md` is written, to read its techniques; it is not meant to be rendered. An Edit & Documentary style is the exception: fetch it before the treatment to use the material tools its `STYLE.md` names in `demo/tools/` (`$LIB/AGENTS.md`, "Treatment first") |
 
+**Combine with the animation skill.** Whenever the film has a character, a mascot or an object that acts (most films in the Cartoons, Sketch & Board and Traditional Crafts styles, and any story with a protagonist), also use the `animation-principles` skill from this plugin: read `$LIB/ANIMATION.md`, write the character note before the model sheet, plan each key action pose to pose with `/core/anim.js`, and add its animation check (ANIMATION.md §11) to the self-check before delivery. The style's `STYLE.md` still sets the look and motion quality; the principles decide the poses and the timing inside it.
+
 Deliver what `$LIB/DIRECTOR.md` §11 lists, in the project folder, and tell the user where it is.
